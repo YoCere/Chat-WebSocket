@@ -4,11 +4,21 @@ const app=express();
 
 app.set('port', process.env.PORT||3000);
 
-//static
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.listen(app.get('port'), ()=>{
+//Start server
+const server = app.listen(app.get('port'), ()=>{
     console.log('server on port', app.get('port'));
-}
+});
 
-);
+//static
+const SocketIO = require('socket.io');
+const io = SocketIO(server);
+
+//websockets
+io.on('connection', ()=>{
+    console.log('New Connection');
+});
+
+
+
+
